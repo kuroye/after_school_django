@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>main</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+
+</head>
+<body>
+
+    <div class="container">
+
+        
+
+        <div class="msg-box">
+            <h3 class="width-90-per">{{event.character}}</h3>
+            <hr class="width-90-per">
+          <div class="text-area">
+            <h2 class="text">{{event.text}}</h2>
+        </div>  
+        </div>
+
+        <div>
+            <div class="attribute-container">
+               
+                <h2 class="attr">{{player.name}}</h2>
+                <h2 class="attr">HP: {{player.hp}}</h2>
+                <h2 class="attr">ATK: {{player.attack}}</h2>
+         
+                
+            </div>
+        </div>
+        
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+      <button class="button-35" id="next-btn" style="display:none;" name="next" value="next">继续</button>  
+    </form>
+    
+    
+    
+    <!-- <h2>{{player.hp}}</h2> -->
+
+    <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+</body>
+</html>

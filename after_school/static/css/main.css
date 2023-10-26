@@ -1,0 +1,184 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+    /* gap: 16px; */
+    /* background: url("/static/images/class_room.jpg") 50% 0 no-repeat fixed; */
+}
+
+.container .text-area {
+    background-color: rgba(255, 255, 255, 0.85);
+    width: 30vw;
+    height: 20vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+
+}
+.container .text-area .text {
+    width: 90%;
+    color: black;
+}
+
+
+.container .next-btn {
+    border-radius: 50%;
+    
+}
+
+
+.container .attribute-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 30vw;
+    height: 30vh;
+    background-color: rgba(126, 29, 211, 0.695);
+    border: solid black;
+    border-width: 2px 2px 0 0;
+    border-radius: 0 10px 0 0;
+    /* transform: translate(-60%,0); */
+}
+
+.container .attribute-container .attr {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(255, 174, 60);
+}
+
+
+.container .msg-box {
+    border: 2px solid black;
+    border-radius: 10px;
+    /* border-radius: 5px; */
+}
+
+
+.container .next-btn-container {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.width-90-per {
+    padding: 0 10px 0 10px;
+    width: 90%;
+}
+
+
+
+/* Next Button */
+
+
+
+.btn {
+    text-decoration: none;
+    /* display: inline-block; */
+    padding: 8px 16px;
+    backface-visibility: hidden;
+    
+  }
+  
+  .btn:hover {
+    background-color: #ddd;
+    color: black;
+  }
+  
+  .previous {
+    background-color: #f1f1f1;
+    color: black;
+  }
+  
+  .next {
+    background-color: rgba(0, 0, 0, 0.9);
+    color: white;
+    position: absolute;
+    transform: translate(69vw,-43vh);
+    /* display: "none"; */
+  }
+  
+  .round {
+    border-radius: 50%;
+  }
+ 
+
+
+  /* CSS */
+  .button-89 {
+    --b: 3px;   /* border thickness */
+    --s: .45em; /* size of the corner */
+    --color: #373B44;
+    
+    padding: calc(.5em + var(--s)) calc(.9em + var(--s));
+    color: var(--color);
+    --_p: var(--s);
+    background:
+      conic-gradient(from 90deg at var(--b) var(--b),#0000 90deg,var(--color) 0)
+      var(--_p) var(--_p)/calc(100% - var(--b) - 2*var(--_p)) calc(100% - var(--b) - 2*var(--_p));
+    transition: .3s linear, color 0s, background-color 0s;
+    outline: var(--b) solid #0000;
+    outline-offset: .6em;
+    font-size: 16px;
+  
+    border: 0;
+  
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+
+    position: absolute;
+    transform: translate(69vw,-43vh);
+  }
+  
+  .button-89:hover,
+  .button-89:focus-visible{
+    --_p: 0px;
+    outline-color: var(--color);
+    outline-offset: .05em;
+  }
+  
+  .button-89:active {
+    background: var(--color);
+    color: #fff;
+  }
+
+  /* CSS */
+  .button-35 {
+    align-items: center;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: transparent 0 0 0 3px,rgba(18, 18, 18, .1) 0 6px 20px;
+    box-sizing: border-box;
+    color: #121212;
+    cursor: pointer;
+    display: inline-flex;
+    flex: 1 1 auto;
+    font-family: Inter,sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    justify-content: center;
+    line-height: 1;
+    margin: 0;
+    outline: none;
+    padding: 1rem 1.2rem;
+    text-align: center;
+    text-decoration: none;
+    transition: box-shadow .2s,-webkit-box-shadow .2s;
+    white-space: nowrap;
+    border: 0;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+
+    position: absolute;
+    transform: translate(69vw,-43vh);
+  }
+  
+  .button-35:hover {
+    box-shadow: #121212 0 0 0 2px, transparent 0 0 0 0;
+  }
