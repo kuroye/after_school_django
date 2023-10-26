@@ -37,3 +37,15 @@ class Event(models.Model):
 
     def __str__(self):
         return str(self.event_group)+ ' | ' + str(self.text) + ' | ' + str(self.sub_order)
+
+
+
+
+class Item(models.Model):
+
+    name = models.CharField(max_length=200)
+    image = models.ImageField(upload_to='item_images/',null=True, blank=True)
+    attack = models.FloatField(default=0)
+
+    def __str__(self):
+        return self.name
