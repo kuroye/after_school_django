@@ -49,6 +49,32 @@
     color: rgb(255, 174, 60);
 }
 
+.container .item-container {
+  position: absolute;
+    top: 100px;
+    left: 0;
+    width: 6vw;
+    height: auto;
+    background-color: rgba(29, 102, 211, 0.695);
+    border: solid black;
+    border-width: 2px 2px 2px 0;
+    border-radius: 0 10px 10px 0;
+}
+
+.container .item-container .item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.695);
+
+  margin: 10px 0 10px 0;
+
+  border-radius: 0 20px 20px 0;
+  
+  width: 100%;
+  height: 70px;
+  /* padding: 100px; */
+}
 
 .container .msg-box {
     border: 2px solid black;

@@ -29,7 +29,7 @@ function nextBtn() {
                           
                       }
          $ele.html(str.substring(0, progress));
-                  }, 30);
+                  }, 60);
               });
               return this;
           };

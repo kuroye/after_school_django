@@ -10,6 +10,8 @@ class Character(models.Model):
     current_process = models.IntegerField(default=1)
     current_sub_process = models.IntegerField(default=1)
 
+    max_item = models.IntegerField(default=3)
+
     def __str__(self):
         return self.name
 
@@ -44,8 +46,16 @@ class Event(models.Model):
 class Item(models.Model):
 
     name = models.CharField(max_length=200)
-    image = models.ImageField(upload_to='item_images/',null=True, blank=True)
+    image = models.ImageField(upload_to='images/item_images/',null=True, blank=True)
     attack = models.FloatField(default=0)
 
     def __str__(self):
         return self.name
+
+class CharacterItem(models.Model):
+
+    character = models.ForeignKey(Character, on_delete=models.CASCADE)
+    item = models.ManyToManyField(Item, null=True, blank=True)
+
+    def __str__(self):
+        return str(self.character) + '的背包'

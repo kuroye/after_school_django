@@ -1,8 +1,10 @@
 from django.contrib import admin
 
-from .models import Character, Event, EventGroup
+from .models import *
 # Register your models here.
 
 admin.site.register(Character)
 admin.site.register(Event)
 admin.site.register(EventGroup)
+admin.site.register(Item)
+admin.site.register(CharacterItem)

@@ -1,12 +1,17 @@
 from django.shortcuts import render
 
-from .models import Character, Event, EventGroup
+from .models import *
 # Create your views here.
 
 def refresh_event(event_group, player):
     return Event.objects.filter(event_group=event_group).filter(sub_order=player.current_sub_process).first()
 def refresh_event_group(player):
     return EventGroup.objects.filter(order=player.current_process).first()
+
+def my_item(player):
+    print('hello')
+    print (CharacterItem.objects.filter(character=player))
+    return CharacterItem.objects.filter(character=player).first()
 
 def display(request):
     
@@ -15,6 +20,20 @@ def display(request):
     event_group = refresh_event_group(player)
 
     event = refresh_event(event_group, player)
+
+    character_item = CharacterItem.objects.filter(character=player).first()
+
+    items = []
+
+    my_items = character_item.item.all()
+
+    for i in range(player.max_item):
+        print(i)
+        if i >= len(my_items.values()):
+            items.append({})
+        else:
+            items.append(my_items.values()[i])
+    
 
     if request.method == "POST":
         data = request.POST
@@ -31,5 +50,15 @@ def display(request):
 
     return render(request, 'main.html', {
     "player" : player,
-    "event": event})
+    "event": event,
+    "items": items})
 
+
+def choice(request):
+
+    pass
+
+
+def my_item(request):
+
+    pass

@@ -12,6 +12,7 @@
 </head>
 <body>
 
+    
     <div class="container">
 
         
@@ -32,6 +33,19 @@
                 <h2 class="attr">ATK: {{player.attack}}</h2>
          
                 
+            </div>
+
+            <div class="item-container">
+
+                {% for item in items%}
+                <div class="item">
+                    <!-- {{ item }} -->
+                    <img src="{% static item.image %}" alt="" width="50%" >
+                </div>
+                
+                
+                {% endfor%}
+
             </div>
         </div>
         
