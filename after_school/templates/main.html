@@ -40,7 +40,10 @@
                 {% for item in items%}
                 <div class="item">
                     <!-- {{ item }} -->
-                    <img src="{% static item.image %}" alt="" width="50%" >
+                    <!-- <img src="{{ item.image }}" alt="" width="50%" > -->
+                    
+                    <img src="/media/{{ item.image }}" alt="" width="50%" >
+
                 </div>
                 
                 
