@@ -1,3 +1,9 @@
+function choiceBtn(elements) {
+  for(var i=0; i<elements.length; i++) { 
+    elements[i].style.display='block';
+  }
+}
+
 function nextBtn() {
     var x = document.getElementById("next-btn");
     if (x.style.display === "none") {
@@ -5,7 +11,9 @@ function nextBtn() {
     } else {
       x.style.display = "none";
     }
+
   }
+
 
 (function ($) {
     $.fn.typewriter  = function() {
@@ -24,7 +32,14 @@ function nextBtn() {
                       if (progress >= str.length) {
                           
                           clearInterval(timer);
-                          nextBtn();
+                          
+                          var elements = document.getElementsByClassName("choices")
+                          if (elements.length!=0) {
+                            choiceBtn(elements);
+                          }else{
+                            nextBtn();
+                          }
+                          
                           console.log("I AM FINISHED");
                           
                       }
