@@ -48,7 +48,7 @@ def display(request):
         event_group = refresh_event_group(player)
         event = refresh_event(event_group, player)
 
-    return render(request, 'main.html', {
+    return render(request, 'msg-box.html', {
     "player" : player,
     "event": event,
     "items": items})
