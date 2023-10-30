@@ -16,6 +16,9 @@ class Character(models.Model):
         return self.name
 
 
+def find_last_group():
+    last_group = EventGroup.objects.all().order_by('order').last()
+    return last_group.order+1
 
 class EventGroup(models.Model):
     EVENT_CHOICE = [
@@ -26,10 +29,10 @@ class EventGroup(models.Model):
 
     name = models.CharField(max_length=200)
     type = models.CharField(max_length=1, choices=EVENT_CHOICE)
-    order = models.IntegerField()
+    order = models.IntegerField(default=find_last_group)
 
     def __str__(self):
-        return self.name
+        return str(self.type)+ ' | ' +str(self.name) +' | '+ str(self.order)
 
 
 def find_last_order():
@@ -46,14 +49,21 @@ class Event(models.Model):
     text = models.TextField()
     character = models.ForeignKey(Character, on_delete=models.CASCADE, blank=True, null=True)
     sub_order = models.IntegerField(default=find_last_sub_order)
-    jump_to = models.ForeignKey(EventGroup, on_delete=models.CASCADE, null=True, blank=True, related_name='jump_to')
+    
 
 
     def __str__(self):
-        return str(self.event_group)+ ' | ' + str(self.text) + ' | ' + str(self.sub_order)
+        return str(self.event_group)+ ' > ' + str(self.text) + ' | ' + str(self.sub_order)
 
 
+class Choice(models.Model):
 
+    name = models.CharField(max_length=200)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    jump_to = models.ForeignKey(EventGroup, on_delete=models.CASCADE, null=True, blank=True, related_name='jump_to')
+
+    def __str__(self):
+        return str(self.event) +' | '+ str(self.name)
 
 class Item(models.Model):
 
