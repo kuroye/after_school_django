@@ -69,6 +69,9 @@ def display(request):
             player.current_sub_process = 0
             player.current_process = 0
 
+            player.save()
+            event_group, event = refresh_process(player)
+            
             return redirect(reverse('main'))
         if action == 'next':
             if Event.objects.filter(event_group__order=player.current_process).filter(sub_order= player.current_sub_process + 1):
