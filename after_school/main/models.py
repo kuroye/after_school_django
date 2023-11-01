@@ -81,3 +81,12 @@ class CharacterItem(models.Model):
 
     def __str__(self):
         return str(self.character) + '的背包'
+
+
+class Video(models.Model):
+
+    name = models.CharField(max_length=200)
+    video = models.FileField(upload_to='videos/', null=True)
+
+    def __str__(self):
+        return str(self.name)
