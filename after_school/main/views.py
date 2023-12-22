@@ -119,6 +119,7 @@ def display(request):
         context['choices'] = get_choices(event_group)
         return render(request, 'choices.html', context)
     elif event_group.type == 'B':
+        context['skills'] = get_choices(event_group)
         return render(request, 'battle.html', context)
     else:
         return render(request, 'msg-box.html', context)

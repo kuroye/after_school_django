@@ -76,6 +76,15 @@ class Battle(models.Model):
     def __str__(self):
         return str(self.event) +' | '+ str(self.name)
 
+class Skill(models.Model):
+
+    name = models.CharField(max_length=200)
+    min_atk = models.IntegerField(default=0)
+    max_atk = models.IntegerField(default=0)
+
+    def __str__(self):
+        return str(self.name)
+
 class Item(models.Model):
 
     name = models.CharField(max_length=200)
