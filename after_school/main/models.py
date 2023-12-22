@@ -49,6 +49,8 @@ class Event(models.Model):
     text = models.TextField()
     character = models.ForeignKey(Character, on_delete=models.CASCADE, blank=True, null=True)
     sub_order = models.IntegerField(default=find_last_sub_order)
+    jump_to = models.ForeignKey(EventGroup, on_delete=models.CASCADE, null=True, blank=True, related_name='jump_to_from_event')
+
     
 
 
@@ -60,7 +62,7 @@ class Choice(models.Model):
 
     name = models.CharField(max_length=200)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
-    jump_to = models.ForeignKey(EventGroup, on_delete=models.CASCADE, null=True, blank=True, related_name='jump_to')
+    jump_to = models.ForeignKey(EventGroup, on_delete=models.CASCADE, null=True, blank=True, related_name='jump_to_from_choice')
 
     def __str__(self):
         return str(self.event) +' | '+ str(self.name)

@@ -95,7 +95,7 @@ def display(request):
 
                 return redirect(reverse('main'))
 
-        if 'choices' in action:
+        if 'choices' in action or 'next-with-jump-to' in action:
             jump_to = str.split(action,'|')[1]
             player.current_sub_process = 1
             player.current_process = int(jump_to)

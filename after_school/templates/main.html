@@ -70,7 +70,12 @@
 
     <form method="post">
         {% csrf_token %}
-      <button class="button-35 next-btn" id="next-btn" style="display:none;" name="action" value="next">继续</button>  
+        {% if event.jump_to %}
+        <button class="button-35 next-btn" id="next-btn" style="display:none;" name="action" value="next-with-jump-to|{{event.jump_to.order}}">继续</button>
+        {% else %}
+        <button class="button-35 next-btn" id="next-btn" style="display:none;" name="action" value="next">继续</button>
+        {% endif %}
+        
     </form>
     
     
