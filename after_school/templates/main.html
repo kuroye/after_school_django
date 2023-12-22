@@ -15,7 +15,9 @@
     
     <div class="container">
 
-        
+        {% block enemy %}
+        {% endblock %}
+
         {% block center %}
         {% endblock %}
         
@@ -27,9 +29,9 @@
         <div>
             <div class="attribute-container">
                
-                <h2 class="attr">{{player.name}}</h2>
-                <h2 class="attr">HP: {{player.hp}}</h2>
-                <h2 class="attr">ATK: {{player.attack}}</h2>
+                <h1 class="attr">{{player.name}}</h1>
+                <h2 class="attr">当前HP: {{player.current_hp}}</h2>
+                <h2 class="attr">攻击力: {{player.attack}}</h2>
                 <div>
                     <form method="post">
                         {% csrf_token %}

@@ -4,7 +4,8 @@ from django.db import models
 class Character(models.Model):
 
     name = models.CharField(max_length=200)
-    hp = models.FloatField(default=0)
+    max_hp = models.FloatField(default=0)
+    current_hp = models.FloatField(default=0)
     attack = models.FloatField(default=0)
     is_player = models.BooleanField(default=False)
     current_process = models.IntegerField(default=1)
@@ -51,7 +52,7 @@ class Event(models.Model):
     sub_order = models.IntegerField(default=find_last_sub_order)
     jump_to = models.ForeignKey(EventGroup, on_delete=models.CASCADE, null=True, blank=True, related_name='jump_to_from_event')
 
-    
+    p2 = models.ForeignKey(Character, on_delete=models.CASCADE, blank=True, null=True, related_name='p2')
 
 
     def __str__(self):

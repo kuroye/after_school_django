@@ -104,6 +104,9 @@ def display(request):
             event_group, event = refresh_process(player)
 
             return redirect(reverse('main'))
+        
+        # if 'battle' in action:
+
                 
         player.save()
         event_group, event = refresh_process(player)
@@ -119,7 +122,8 @@ def display(request):
         context['choices'] = get_choices(event_group)
         return render(request, 'choices.html', context)
     elif event_group.type == 'B':
-        context['skills'] = get_choices(event_group)
+        context['skills'] = Skill.objects.all()
+        context['enemy'] = event.p2
         return render(request, 'battle.html', context)
     else:
         return render(request, 'msg-box.html', context)

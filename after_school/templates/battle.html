@@ -6,9 +6,9 @@
     <form method="post">
         {% csrf_token %}
 
-        {% for choice in choices%}
-        <button class="button-35 choices" id="choices" name="action" value="choices|{{choice.jump_to.order}}">
-            {{ choice.name }}
+        {% for skill in skills%}
+        <button class="button-35 choices" id="choices" name="action" value="battle">
+            {{ skill.name }} | atk: {{ skill.min_atk}} ~ {{ skill.max_atk}}
         </button>
         {% endfor%}
     </form>
@@ -17,4 +17,16 @@
 
     
 </div>
+{% endblock %}
+
+
+{% block enemy %}
+<div class="enemy-container">
+    <h1 class="attr">{{ enemy.name }}</h1>
+    <h2 class="attr">当前HP: {{ enemy.current_hp }}</h2>
+    <h2 class="attr">攻击力: {{ enemy.attack }}</h2>
+
+
+</div>
+    
 {% endblock %}
