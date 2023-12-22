@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 
 from .models import *
+
+import random
 # Create your views here.
 
 def refresh_event(event_group, player):
@@ -55,7 +57,8 @@ def display(request):
     
 
 
-
+    player.save()
+    event_group, event = refresh_process(player)
     
 
 
@@ -73,7 +76,7 @@ def display(request):
             event_group, event = refresh_process(player)
             
             return redirect(reverse('main'))
-        if action == 'next':
+        if action == 'next' and event.event_group.type != 'B':
             if Event.objects.filter(event_group__order=player.current_process).filter(sub_order= player.current_sub_process + 1):
                 print(Event.objects.filter(sub_order= player.current_sub_process + 1))
                 player.current_sub_process = player.current_sub_process + 1
@@ -105,12 +108,30 @@ def display(request):
 
             return redirect(reverse('main'))
         
-        # if 'battle' in action:
+        if event.event_group.type == 'B':
+            # 我的回合，当我出招后
+            if 'battle' in action:
 
+                skill = str.split(action,'|')
+                skill_name = skill[1]
+                skill_min_atk = int(skill[2])
+                skill_max_atk = int(skill[3])
+                damage = random.randint(skill_min_atk,skill_max_atk)
+                enemy = event.p2
+                enemy.current_hp = enemy.current_hp - damage
+
+                battle_info = str(player.name) + '使出了' + str(skill_name) + ', 对' + str(enemy.name) + '造成了' + str(damage) + '点伤害'
                 
-        player.save()
-        event_group, event = refresh_process(player)
 
+                event.round = event.round + 1
+                event.save()
+                enemy.save()
+                Battle.objects.create(name=battle_info,event=event)
+                return redirect(reverse('main'))
+            
+            else:
+                # 对手的回合
+                print('YEES,LOOK')
 
     context = {
         "player" : player,
@@ -122,9 +143,16 @@ def display(request):
         context['choices'] = get_choices(event_group)
         return render(request, 'choices.html', context)
     elif event_group.type == 'B':
-        context['skills'] = Skill.objects.all()
-        context['enemy'] = event.p2
-        return render(request, 'battle.html', context)
+        if event.round%2!=0:
+            if event.round != 1:
+                context['event'].text = Battle.objects.all().last().name
+            context['skills'] = Skill.objects.all()
+            context['enemy'] = event.p2
+            return render(request, 'battle.html', context)
+        else:
+            context['enemy'] = event.p2
+            context['event'].text = Battle.objects.all().last().name
+            return render(request, 'battle.html', context)
     else:
         return render(request, 'msg-box.html', context)
         

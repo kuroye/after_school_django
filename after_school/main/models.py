@@ -53,6 +53,7 @@ class Event(models.Model):
     jump_to = models.ForeignKey(EventGroup, on_delete=models.CASCADE, null=True, blank=True, related_name='jump_to_from_event')
 
     p2 = models.ForeignKey(Character, on_delete=models.CASCADE, blank=True, null=True, related_name='p2')
+    round = models.IntegerField(default=1)
 
 
     def __str__(self):
@@ -75,7 +76,7 @@ class Battle(models.Model):
     jump_to = models.ForeignKey(EventGroup, on_delete=models.CASCADE, null=True, blank=True, related_name='jump_to_from_battle')
 
     def __str__(self):
-        return str(self.event) +' | '+ str(self.name)
+        return str(self.event.event_group.name) +' | '+ str(self.name)
 
 class Skill(models.Model):
 
