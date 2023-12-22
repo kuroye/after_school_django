@@ -67,6 +67,15 @@ class Choice(models.Model):
     def __str__(self):
         return str(self.event) +' | '+ str(self.name)
 
+class Battle(models.Model):
+
+    name = models.CharField(max_length=200)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    jump_to = models.ForeignKey(EventGroup, on_delete=models.CASCADE, null=True, blank=True, related_name='jump_to_from_battle')
+
+    def __str__(self):
+        return str(self.event) +' | '+ str(self.name)
+
 class Item(models.Model):
 
     name = models.CharField(max_length=200)
