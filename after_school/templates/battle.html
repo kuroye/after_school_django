@@ -1,0 +1,20 @@
+{% extends 'msg-box.html' %}
+ 
+{% block choices %}
+<div class="choices-container">
+
+    <form method="post">
+        {% csrf_token %}
+
+        {% for choice in choices%}
+        <button class="button-35 choices" id="choices" name="action" value="choices|{{choice.jump_to.order}}">
+            {{ choice.name }}
+        </button>
+        {% endfor%}
+    </form>
+    
+    
+
+    
+</div>
+{% endblock %}
