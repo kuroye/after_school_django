@@ -4,6 +4,12 @@ from django.urls import reverse
 from .models import *
 
 import random
+from pygame import mixer
+
+import os
+from django.conf import settings
+
+import time
 # Create your views here.
 
 def refresh_event(event_group, player):
@@ -116,14 +122,23 @@ def display(request):
                 skill_name = skill[1]
                 skill_min_atk = int(skill[2])
                 skill_max_atk = int(skill[3])
+                skill_audio = skill[4]
                 damage = random.randint(skill_min_atk,skill_max_atk)
                 enemy = event.p2
                 enemy.current_hp = enemy.current_hp - damage
 
                 battle_info = str(player.name) + '使出了' + str(skill_name) + ', 对' + str(enemy.name) + '造成了' + str(damage) + '点伤害'
-                
-
+                print(skill_audio)
+                normalized_path = os.path.normpath(skill_audio)
+                print(normalized_path)
+                full_path_audio = os.path.join(settings.MEDIA_ROOT, normalized_path)
+                print(full_path_audio)
+                mixer.init()
+                mixer.music.load(full_path_audio)
+                mixer.music.play()
+                time.sleep(1.5)
                 event.round = event.round + 1
+                event.p2_act = False
                 event.save()
                 enemy.save()
                 Battle.objects.create(name=battle_info,event=event)
@@ -132,6 +147,38 @@ def display(request):
             else:
                 # 对手的回合
                 print('YEES,LOOK')
+                enemy = event.p2
+                
+                if event.p2_act:
+                    event.round = event.round + 1
+                else:
+
+                    skills = Skill.objects.filter(user=enemy)
+                    skill = random.choice(skills)
+                    skill_name = skill.name
+                    skill_min_atk = int(skill.min_atk)
+                    skill_max_atk = int(skill.max_atk)
+                    skill_audio = skill.audio
+                    damage = random.randint(skill_min_atk,skill_max_atk)
+                    player.current_hp = player.current_hp - damage
+                    player.save()
+                    normalized_path = os.path.normpath(skill_audio.path)
+                    print(normalized_path)
+                    full_path_audio = os.path.join(settings.MEDIA_ROOT, normalized_path)
+                    print(full_path_audio)
+                    mixer.init()
+                    mixer.music.load(full_path_audio)
+                    mixer.music.play()
+                    # time.sleep(1.5)
+                
+
+                    battle_info = str(enemy.name) + '使出了' + str(skill_name) + ', 对' + str(player.name) + '造成了' + str(damage) + '点伤害'
+                    Battle.objects.create(name=battle_info,event=event)
+                    event.p2_act = True
+
+                event.save()
+                return redirect(reverse('main'))
+
 
     context = {
         "player" : player,
@@ -143,13 +190,43 @@ def display(request):
         context['choices'] = get_choices(event_group)
         return render(request, 'choices.html', context)
     elif event_group.type == 'B':
-        if event.round%2!=0:
-            if event.round != 1:
-                context['event'].text = Battle.objects.all().last().name
-            context['skills'] = Skill.objects.all()
+
+        if event.p2.current_hp <= 0:
+            context['event'].text = "恭喜你战胜了" + str(event.p2.name)
+            context['enemy'] = event.p2
+            
+            return render(request, 'battle.html', context)
+
+        if player.current_hp <= 0:
+            context['enemy'] = event.p2
+            context['event'].text = "很可惜你失败了"
+            return render(request, 'battle.html', context)
+
+
+        if event.round%2!=0 and event.p2_act is False:
+            if event.round ==1:
+                print("I AM 1")
+                context['event'].text = event.text
+            else:
+                print("I AM 1.5")
+                context['event'].text = Battle.objects.all().last().name 
+
+            
+            context['skills'] = Skill.objects.filter(user=player)
             context['enemy'] = event.p2
             return render(request, 'battle.html', context)
+
+        elif event.p2_act and event.round%2!=0:
+            print("I AM 2")
+
+            context['enemy'] = event.p2
+            context['skills'] = Skill.objects.filter(user=player)
+            context['event'].text = "你的选择是:"
+            return render(request, 'battle.html', context)
+
         else:
+            print("I AM 3")
+
             context['enemy'] = event.p2
             context['event'].text = Battle.objects.all().last().name
             return render(request, 'battle.html', context)

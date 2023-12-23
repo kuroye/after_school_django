@@ -54,6 +54,8 @@ class Event(models.Model):
 
     p2 = models.ForeignKey(Character, on_delete=models.CASCADE, blank=True, null=True, related_name='p2')
     round = models.IntegerField(default=1)
+    p2_act = models.BooleanField(default=False)
+    victory = models.ForeignKey(EventGroup, on_delete=models.CASCADE, null=True, blank=True, related_name='jump_to_if_victory')
 
 
     def __str__(self):
@@ -84,6 +86,9 @@ class Skill(models.Model):
     min_atk = models.IntegerField(default=0)
     max_atk = models.IntegerField(default=0)
 
+    user = models.ForeignKey(Character, on_delete=models.CASCADE, blank=True, null=True)
+
+    audio = models.FileField(upload_to='audio/skill/',null=True, blank=True)
     def __str__(self):
         return str(self.name)
 
