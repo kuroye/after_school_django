@@ -57,6 +57,7 @@ class Event(models.Model):
     p2_act = models.BooleanField(default=False)
     victory = models.ForeignKey(EventGroup, on_delete=models.CASCADE, null=True, blank=True, related_name='jump_to_if_victory')
     lose = models.ForeignKey(EventGroup, on_delete=models.CASCADE, null=True, blank=True, related_name='jump_to_if_lose')
+    finish = models.BooleanField(default=False, null=True)
 
     def __str__(self):
         return str(self.event_group)+ ' > ' + str(self.text) + ' | ' + str(self.sub_order)

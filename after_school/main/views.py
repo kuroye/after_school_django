@@ -73,6 +73,7 @@ def display(request):
         action = data.get('action')
 
         print(action)
+        print(event.event_group.type)
 
         if action == 'restart':
             player.current_sub_process = 0
@@ -83,6 +84,7 @@ def display(request):
             
             return redirect(reverse('main'))
         if action == 'next' and event.event_group.type != 'B':
+            print('是不是')
             if Event.objects.filter(event_group__order=player.current_process).filter(sub_order= player.current_sub_process + 1):
                 print(Event.objects.filter(sub_order= player.current_sub_process + 1))
                 player.current_sub_process = player.current_sub_process + 1
@@ -194,13 +196,27 @@ def display(request):
         if event.p2.current_hp <= 0:
             context['event'].text = "恭喜你战胜了" + str(event.p2.name)
             context['enemy'] = event.p2
+            context['event']['event_group']['type'] = 'S'
             
             return render(request, 'battle.html', context)
 
         if player.current_hp <= 0:
-            context['enemy'] = event.p2
-            context['event'].text = "很可惜你失败了"
-            return render(request, 'battle.html', context)
+            if event.finish:
+                jump_to = event.lose.order
+                player.current_sub_process = 1
+                player.current_process = int(jump_to)
+
+                player.save()
+                event_group, event = refresh_process(player)
+
+                return redirect(reverse('main'))
+            else:
+                context['enemy'] = event.p2
+                context['event'].text = "很可惜你失败了"
+                context['event'].event_group.type = 'S'
+                event.finish = True
+                event.save()
+                return render(request, 'battle.html', context)
 
 
         if event.round%2!=0 and event.p2_act is False:
