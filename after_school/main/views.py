@@ -73,11 +73,14 @@ def display(request):
         action = data.get('action')
 
         print(action)
-        print(event.event_group.type)
+        # print(event.event_group.type)
 
         if action == 'restart':
-            player.current_sub_process = 0
-            player.current_process = 0
+            # player.current_sub_process = 0
+            player.current_sub_process = 1
+            # player.current_process = 0
+            player.current_process = 7
+            player.current_hp = 100
 
             player.save()
             event_group, event = refresh_process(player)
