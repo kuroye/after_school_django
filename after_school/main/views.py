@@ -197,11 +197,23 @@ def display(request):
     elif event_group.type == 'B':
 
         if event.p2.current_hp <= 0:
-            context['event'].text = "恭喜你战胜了" + str(event.p2.name)
-            context['enemy'] = event.p2
-            context['event']['event_group']['type'] = 'S'
+            if event.finish:
+                jump_to = event.victory.order
+                player.current_sub_process = 1
+                player.current_process = int(jump_to)
+
+                player.save()
+                event_group, event = refresh_process(player)
+
+                return redirect(reverse('main'))
+            else:
+                context['event'].text = "恭喜你战胜了" + str(event.p2.name)
+                context['enemy'] = event.p2
+                context['event'].event_group.type = 'S'
+                Event.objects.filter(pk=event.pk).update(finish=True)
+
             
-            return render(request, 'battle.html', context)
+                return render(request, 'battle.html', context)
 
         if player.current_hp <= 0:
             if event.finish:
@@ -217,8 +229,7 @@ def display(request):
                 context['enemy'] = event.p2
                 context['event'].text = "很可惜你失败了"
                 context['event'].event_group.type = 'S'
-                event.finish = True
-                event.save()
+                Event.objects.filter(pk=event.pk).update(finish=True)
                 return render(request, 'battle.html', context)
 
 
