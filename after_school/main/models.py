@@ -1,5 +1,5 @@
 from django.db import models
-
+from club.models import Club
 # Create your models here.
 class Character(models.Model):
 
@@ -12,6 +12,8 @@ class Character(models.Model):
     current_sub_process = models.IntegerField(default=1)
 
     max_item = models.IntegerField(default=3)
+
+    club = models.ForeignKey(Club, on_delete=models.CASCADE, null=True, blank=True, related_name='club')
 
     def __str__(self):
         return self.name
@@ -68,6 +70,7 @@ class Choice(models.Model):
     name = models.CharField(max_length=200)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     jump_to = models.ForeignKey(EventGroup, on_delete=models.CASCADE, null=True, blank=True, related_name='jump_to_from_choice')
+    club = models.ForeignKey(Club, on_delete=models.CASCADE, null=True, blank=True, related_name='club_choice')
 
     def __str__(self):
         return str(self.event) +' | '+ str(self.name)

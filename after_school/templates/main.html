@@ -12,8 +12,13 @@
 </head>
 <body>
 
-    
+    {% if player.club %}
+            <a href={% url 'club' %} class="button-35 club-btn">{{ player.club }}</a>
+        {% else %}
+            
+        {% endif %}
     <div class="container">
+        
 
         {% block enemy %}
         {% endblock %}

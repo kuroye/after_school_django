@@ -110,6 +110,11 @@ def display(request):
                 return redirect(reverse('main'))
 
         if 'choices' in action or 'next-with-jump-to' in action:
+            if 'club' in action:
+                club_name = str.split(action,'|')[2]
+                club = Club.objects.filter(name=club_name).first()
+                player.club = club
+            
             jump_to = str.split(action,'|')[1]
             player.current_sub_process = 1
             player.current_process = int(jump_to)
@@ -118,6 +123,7 @@ def display(request):
             event_group, event = refresh_process(player)
 
             return redirect(reverse('main'))
+        
         
         if event.event_group.type == 'B':
             # 我的回合，当我出招后

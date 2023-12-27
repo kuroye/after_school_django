@@ -159,7 +159,10 @@
   }
  
 
-
+.club-btn {
+  position: absolute;
+  left: 15%;
+}
 
   /* CSS */
   .button-35 {

@@ -7,9 +7,19 @@
         {% csrf_token %}
 
         {% for choice in choices%}
-        <button class="button-35 choices" id="choices" name="action" value="choices|{{choice.jump_to.order}}">
-            {{ choice.name }}
-        </button>
+            {% if choice.club %}
+                <button class="button-35 choices" id="choices" name="action" value="club-choices|{{choice.jump_to.order}}|{{choice.club.name}}">
+                    {{ choice.club.name }}
+                </button>
+            
+                
+            {% else %}
+                <button class="button-35 choices" id="choices" name="action" value="choices|{{choice.jump_to.order}}">
+                    {{ choice.name }}
+                </button>
+            
+            {% endif %}
+        
         {% endfor%}
     </form>
     
