@@ -10,13 +10,23 @@
     <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
 
 </head>
-<body>
+<body>    
+
+{% if 'club' in request.get_full_path %}
+    
+    <a href={% url 'main' %} class="button-35 club-btn">返回</a>
+
+{% else %}
 
     {% if player.club %}
-            <a href={% url 'club' %} class="button-35 club-btn">{{ player.club }}</a>
-        {% else %}
-            
-        {% endif %}
+    <a href={% url 'club' %} class="button-35 club-btn">{{ player.club }}</a>
+
+    {% else %}
+    
+    {% endif %}
+
+{% endif %}
+
     <div class="container">
         
 
