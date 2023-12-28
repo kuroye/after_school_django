@@ -140,14 +140,15 @@ def display(request):
 
                 battle_info = str(player.name) + '使出了' + str(skill_name) + ', 对' + str(enemy.name) + '造成了' + str(damage) + '点伤害'
                 print(skill_audio)
-                normalized_path = os.path.normpath(skill_audio)
-                print(normalized_path)
-                full_path_audio = os.path.join(settings.MEDIA_ROOT, normalized_path)
-                print(full_path_audio)
-                mixer.init()
-                mixer.music.load(full_path_audio)
-                mixer.music.play()
-                time.sleep(1.5)
+                if skill_audio:
+                    normalized_path = os.path.normpath(skill_audio)
+                    print(normalized_path)
+                    full_path_audio = os.path.join(settings.MEDIA_ROOT, normalized_path)
+                    print(full_path_audio)
+                    mixer.init()
+                    mixer.music.load(full_path_audio)
+                    mixer.music.play()
+                    time.sleep(1.5)
                 event.round = event.round + 1
                 event.p2_act = False
                 event.save()
