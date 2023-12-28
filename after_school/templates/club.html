@@ -1,5 +1,9 @@
 {% extends 'main.html' %}
 
 {% block center %}
-    <h1>Club</h1>
+    {% for skill in skills %}
+
+        <button class="button-89">{{ skill.name }}</button>
+
+    {% endfor %}
 {% endblock %}

@@ -93,6 +93,9 @@ class Skill(models.Model):
     user = models.ForeignKey(Character, on_delete=models.CASCADE, blank=True, null=True)
 
     audio = models.FileField(upload_to='audio/skill/',null=True, blank=True)
+
+    club = models.ForeignKey(Club, on_delete=models.CASCADE, blank=True, null=True, related_name='club_skill')
+
     def __str__(self):
         return str(self.name)
 

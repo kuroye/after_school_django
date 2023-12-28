@@ -18,9 +18,14 @@ def display(request):
         else:
             items.append(my_items.values()[i])
 
+
+    club = player.club
+    club_skills = Skill.objects.filter(club=club)
+
     context = {
         "player" : player,
         "items": items,
+        "skills": club_skills,
         }
 
     return render(request, 'club.html', context)
