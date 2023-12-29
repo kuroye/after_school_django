@@ -1,8 +1,18 @@
 {% extends 'main.html' %}
 
-{% block center %}
+{% block shop %}
+<table>
+    <tr><th>shop</th></tr>
     {% for skill in skills %}
-        <button class="button-89">{{ skill.name }}</button>
+    <tr>
+        <td>
+            <button class="button-89">{{ skill.name }}</button>
+        </td>
+    </tr>
+        
+    
+        
 
     {% endfor %}
+</table>
 {% endblock %}
