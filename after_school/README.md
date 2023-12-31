@@ -4,3 +4,4 @@
 ## I want commit 3
 ## I want contribution 4
 ## I want contribution 5
+## I want contribution 6
