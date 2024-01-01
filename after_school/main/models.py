@@ -96,6 +96,8 @@ class Skill(models.Model):
 
     club = models.ForeignKey(Club, on_delete=models.CASCADE, blank=True, null=True, related_name='club_skill')
 
+    is_purchased = models.BooleanField(default=False)
+
     def __str__(self):
         return str(self.name)
 

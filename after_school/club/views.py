@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from main.models import *
+from django.urls import reverse
 
 # Create your views here.
 
@@ -21,6 +22,16 @@ def display(request):
 
     club = player.club
     club_skills = Skill.objects.filter(club=club)
+
+    if request.method == "POST":
+        data = request.POST
+        action = data.get('action')
+
+        if 'buy-skill' in action:
+            skill_name = str.split(action,'|')[1]
+            Skill.objects.filter(name=skill_name).update(user=player,is_purchased=True)
+            
+            return redirect((reverse('club')))
 
     context = {
         "player" : player,

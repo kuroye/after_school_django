@@ -2,11 +2,29 @@
 
 {% block shop %}
 <table>
-    <tr><th>shop</th></tr>
+    <tr><th>shop</th>
+        <th>已获得技能</th>
+    </tr>
+    <form method="post">
+        {%csrf_token%}
     {% for skill in skills %}
     <tr>
         <td>
-            <button class="button-89">{{ skill.name }}</button>
+            <button class="button-89" name="action" value="buy-skill|{{skill.name}}"
+            {% if skill.is_purchased %}
+                style = "display: none;"
+            {% else %}
+                
+            {% endif %}
+            >{{ skill.name }}</button>
+        </td>
+
+        <td>
+            {% if skill.is_purchased %}
+                <bold>{{skill.name}}</bold>
+            {% else %}
+            
+            {% endif %}
         </td>
     </tr>
         
@@ -14,5 +32,7 @@
         
 
     {% endfor %}
+
+</form>
 </table>
 {% endblock %}
